@@ -8,6 +8,8 @@ public class ArtGalleryTest {
     ArtGallery gallery;
     Artwork artwork;
     Customer customer;
+    Artwork stockTakeTestArt1;
+    Artwork stockTakeTestArt2;
 
     @BeforeEach
     void setUp() {
@@ -39,6 +41,26 @@ public class ArtGalleryTest {
         assertThat(customer.getWallet()).isEqualTo(310000);
         // has gallery till increased by artwork price?
         assertThat(gallery.getTill()).isEqualTo(690000);
+    }
+
+    @Test
+    void artworkTransfers(){
+        gallery.sellArtwork(artwork, customer);
+        System.out.println((customer.getArtCollection().contains(artwork)));
+        assertThat(gallery.getStock().size()).isEqualTo(0);
+        assertThat(customer.getArtCollection().size()).isEqualTo(1);
+    }
+
+    @Test
+    void stockTakeTakes() {
+        stockTakeTestArt1 = new Artwork("BobbyMcBobberson", "Samra", 543211);
+        stockTakeTestArt2 = new Artwork("idkrandom", "yeye", 242321);
+
+        gallery.addArtwork(stockTakeTestArt1);
+        gallery.addArtwork(stockTakeTestArt2);
+
+        assertThat(gallery.stockTake()).isEqualTo(1475532);
+
     }
 }
 
